@@ -1,15 +1,39 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import useLogin from "../hooks/useLogin";
-import { Button, Form, Modal } from "antd";
+import { Button, Modal } from "antd";
 import LogInForm from "./LogInForm";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-function Header({ headerRef }) {
+function Header() {
   const [login, toggleLogin] = useLogin();
   const [showModal, setShowModal] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const [form] = Form.useForm();
+  const validationSchema = yup.object().shape({
+    username: yup
+      .string()
+      .min(3, "Username.length > 3")
+      .max(40)
+      .required("Username required"),
+    password: yup
+      .string()
+      .matches(/^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).*$/)
+      .required("Password required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      handleSubmitLogin();
+    },
+  });
 
   const onOpenModal = () => {
     setShowModal(true);
@@ -17,7 +41,7 @@ function Header({ headerRef }) {
 
   const onCloseModal = () => {
     setShowModal(false);
-    form.resetFields();
+    formik.resetForm();
   };
 
   const handleSubmitLogin = () => {
@@ -48,13 +72,13 @@ function Header({ headerRef }) {
             key="submit"
             type="primary"
             loading={confirmLoading}
-            onClick={form.submit}
+            onClick={formik.handleSubmit}
           >
             Log In
           </Button>,
         ]}
       >
-        <LogInForm form={form} onSubmit={handleSubmitLogin} />
+        <LogInForm formik={formik} onSubmit={handleSubmitLogin} />
       </Modal>
     </HeaderContainer>
   );
