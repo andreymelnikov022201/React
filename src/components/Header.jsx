@@ -4,8 +4,8 @@ import useLogin from "../hooks/useLogin";
 import { Button, Form, Modal } from "antd";
 import LogInForm from "./LogInForm";
 
-function Header({headerRef}) {
-  const [login, toggleLogin] = useLogin()
+function Header({ headerRef }) {
+  const [login, toggleLogin] = useLogin();
   const [showModal, setShowModal] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -31,7 +31,7 @@ function Header({headerRef}) {
   return (
     <HeaderContainer>
       MARKET
-      <button onClick={toggleLogin}>{login ? "logout" : "login"}</button>
+      <button onClick={onOpenModal}>{login ? "logout" : "login"}</button>
       <Modal
         title={"Log In"}
         open={showModal}
@@ -69,5 +69,5 @@ const HeaderContainer = styled.header`
   z-index: 999;
   box-shadow: 0px 0px 10px 2px #202020;
   color: yellow;
-`
+`;
 export default Header;

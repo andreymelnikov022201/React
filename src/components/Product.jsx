@@ -1,18 +1,22 @@
-import { Component, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { totalPlusContext } from "../totalPlus";
 import { setActive } from "./Menu";
-import styles from "./Product.module.css"
+import styles from "./Product.module.css";
 import { CSSTransition } from "react-transition-group";
 
-const Product = ({toggleCount, product}) =>  {
-  const {totalPlusChange} = useContext(totalPlusContext);
+const Product = ({ toggleCount, product }) => {
+  const { totalPlusChange } = useContext(totalPlusContext);
+
   useEffect(() => {
     totalPlusChange();
-  }, [totalPlusChange])
+    return () => totalPlusChange(true);
+  }, []);
+
   const ref = useRef(null);
-    return (
-      <CSSTransition
+
+  return (
+    <CSSTransition
       in={true}
       nodeRef={ref}
       timeout={500}
@@ -22,16 +26,15 @@ const Product = ({toggleCount, product}) =>  {
         exitActive: styles["product-exit-active"],
         exitDone: styles["product-exit"],
       }}
-      >
-     
+    >
       <li>
-        <NavLink to = {`${product.id}`}style={setActive}>
+        <NavLink to={`${product.id}`} style={setActive}>
           {product.name || "All"}
-          </NavLink>
-          <input type="checkbox" onChange={toggleCount}/>
+        </NavLink>
+        <input type="checkbox" onChange={toggleCount} />
       </li>
-      </CSSTransition>
-    );
-  }
+    </CSSTransition>
+  );
+};
 
 export default Product;

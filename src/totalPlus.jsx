@@ -3,10 +3,10 @@ import { createContext, useState } from "react";
 export const totalPlusContext = createContext({});
 
 export const TotalplusContextProvider = (props) => {
-  const [totalPlus, settotalPlus] = useState("");
+  const [totalPlus, settotalPlus] = useState(0);
 
-  const totalPlusChange = (newtotalPlus) => {
-    settotalPlus(newtotalPlus);
+  const totalPlusChange = (minus: boolean) => {
+    settotalPlus((prev) => (minus ? prev - 1 : prev + 1));
   };
 
   const totalPlusState = {

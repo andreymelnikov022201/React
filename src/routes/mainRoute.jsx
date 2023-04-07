@@ -1,7 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Products, { products } from "../components/Products";
-import Product from "../components/Product";
 import Root from "../components/Root";
 import PageNotFound from "../components/PageNotFound";
 import ProductDetails from "../components/ProductDetails";
@@ -14,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "animal/:animalId/",
-        element: <Products products={products} />,
+        element: <Products />,
         children: [
           {
             path: ":productId",
@@ -22,8 +21,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {path: "admin",
-      element: <AdminPanel/>,}
+      { path: "admin", element: <AdminPanel /> },
     ],
   },
 ]);
