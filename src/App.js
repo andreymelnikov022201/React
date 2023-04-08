@@ -3,13 +3,17 @@ import { totalPlusContext } from "./totalPlus";
 import styles from "./App.module.css";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "./redux/reducer";
+import { decrement, fetchPhotos, increment } from "./redux/reducer";
 
 const App = () => {
   const { totalPlus } = useContext(totalPlusContext);
   const counter = useSelector((state) => state.counter);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPhotos());
+  }, [dispatch]);
 
   useEffect(() => {
     console.log(counter);
