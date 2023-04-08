@@ -4,14 +4,18 @@ import "./index.css";
 import App from "./App";
 import { TotalplusContextProvider } from "./totalPlus";
 import { ProductsContextProvider } from "./components/ProductContext";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <TotalplusContextProvider>
-      <ProductsContextProvider>
-        <App />
-      </ProductsContextProvider>
-    </TotalplusContextProvider>
+    <Provider store={store}>
+      <TotalplusContextProvider>
+        <ProductsContextProvider>
+          <App />
+        </ProductsContextProvider>
+      </TotalplusContextProvider>
+    </Provider>
   </React.StrictMode>
 );
